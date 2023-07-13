@@ -1,0 +1,67 @@
+---
+import Header from '../components/Header.svelte'
+
+export interface Props {
+	title: string
+}
+
+const { title } = Astro.props
+---
+
+<html
+	lang='en'
+	class={`all-children:transition-colors duration-200 ease-in`}
+	prefers-color-scheme='dark'
+>
+	<head>
+		<meta charset='UTF-8' />
+		<meta name='description' content='Astro description' />
+		<meta name='viewport' content='width=device-width' />
+		<link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+		<meta name='generator' content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body
+		class='min-h-screen flex flex-col items-center bg-light dark:bg-dark text-dark dark:text-light'
+	>
+		<Header client:load />
+		<slot />
+	</body>
+</html>
+
+<script>
+	import { theme } from '../lib/Theme'
+	const html = document.documentElement
+	const isDark = window.matchMedia('(prefers-color-scheme: dark)')
+
+	theme.set(
+		localStorage.getItem('theme') === 'dark' ?? isDark.matches
+			? 'dark'
+			: 'light'
+	)
+
+	theme.subscribe(value => {
+		localStorage.setItem('theme', value)
+		html.setAttribute('prefers-color-scheme', value)
+	})
+
+	isDark.addEventListener('change', event =>
+		theme.set(event.matches ? 'dark' : 'light')
+	)
+</script>
+
+<style is:global>
+	@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+	* {
+		padding: 0;
+		margin: 0;
+		box-sizing: border-box;
+	}
+
+	body {
+		font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont,
+			'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+			'Helvetica Neue', sans-serif;
+	}
+</style>
