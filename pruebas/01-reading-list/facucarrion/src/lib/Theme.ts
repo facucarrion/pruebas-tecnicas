@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store'
-import type { Theme } from '../types'
+import type { Theme } from '../types/theme.types'
 
 export const theme = writable<Theme>('dark')
 

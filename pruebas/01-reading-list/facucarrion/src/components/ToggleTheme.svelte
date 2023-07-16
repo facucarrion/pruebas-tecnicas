@@ -1,6 +1,5 @@
 <script>
-  import { theme } from '../lib/Theme'
-  import { toggleTheme } from '../lib/Theme'
+  import { theme, toggleTheme } from '@/lib/Theme'
   let checked = false
 
   theme.subscribe(value => {

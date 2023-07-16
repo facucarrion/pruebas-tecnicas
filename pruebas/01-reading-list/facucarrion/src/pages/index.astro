@@ -1,9 +1,12 @@
 ---
-import Layout from '../layouts/Layout.astro'
-import BookGrid from '../components/BookGrid.svelte'
+import Layout from '@/layouts/Layout.astro'
+import BookGrid from '@/components/BookGrid.svelte'
+import FilterPannel from '@/components/FilterPannel.svelte'
 ---
 
 <Layout title='Home'>
-  <h1>Home</h1>
-  <BookGrid />
+  <main class='flex w-full max-w-[1200px]'>
+    <FilterPannel client:load />
+    <BookGrid client:load />
+  </main>
 </Layout>
